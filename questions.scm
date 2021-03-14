@@ -18,7 +18,6 @@
 )
 
 
-;; Problem 17
 ;; Returns a list of two-element lists
 (define (enumerate s)
   ; BEGIN PROBLEM 17
@@ -31,7 +30,7 @@
   (helper s 0)
 )
 
-  ; END PROBLEM 17
+
 (define (remove-redundancy old-list)
     (define (helper old-list new-list)
         (cond ((null? old-list) new-list)
@@ -41,7 +40,7 @@
        (helper old-list nil)
      )
 
-;; Problem 18
+
 ;; List all ways to make change for TOTAL with DENOMS
 (define (list-change total denoms)
   (cond
@@ -52,7 +51,7 @@
    )
 )
 
-;; Problem 19
+
 ;; Returns a function that checks if an expression is the special form FORM
 (define (check-special form)
   (lambda (expr) (equal? form (car expr))))
@@ -65,35 +64,25 @@
 ;; Converts all let special forms in EXPR into equivalent forms using lambda
 (define (let-to-lambda expr)
   (cond ((atom? expr)
-         ; BEGIN PROBLEM 19
          expr
-         ; END PROBLEM 19
          )
         ((quoted? expr)
-         ; BEGIN PROBLEM 19
          expr
-         ; END PROBLEM 19
          )
         ((or (lambda? expr)
              (define? expr))
          (let ((form   (car expr))
                (params (cadr expr))
                (body   (cddr expr)))
-           ; BEGIN PROBLEM 19
            (append (list form params) (map  (lambda (x) (let-to-lambda x)) body))
-           ; END PROBLEM 19
            ))
         ((let? expr)
          (let ((values (cadr expr))
                (body   (cddr expr)))
-           ; BEGIN PROBLEM 19
            (if (not (list? values))
               (cons (car expr) (let-to-lambda (cdr expr)))
               (cons (list 'lambda (let-to-lambda (car (zip values))) (let-to-lambda (car body))) (let-to-lambda (cadr (zip values)))))
-           ; END PROBLEM 19
            ))
         (else
-         ; BEGIN PROBLEM 19
           (cons (let-to-lambda (car expr)) (let-to-lambda (cdr expr)))
-         ; END PROBLEM 19
          ))))

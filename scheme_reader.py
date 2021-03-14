@@ -113,19 +113,13 @@ def scheme_read(src):
         raise EOFError
     val = src.remove_front() # Get the first token
     if val == 'nil':
-        # BEGIN PROBLEM 1
         return nil
-        # END PROBLEM 1
     elif val == '(':
-        # BEGIN PROBLEM 1
         read_rest = read_tail(src)
         return read_rest
-        # END PROBLEM 1
     elif val in quotes:
-        # BEGIN PROBLEM 7
         change_expression_into_its_special_form = Pair(quotes[val] , Pair(scheme_read(src), nil))
         return change_expression_into_its_special_form
-        # END PROBLEM 7
     elif val not in DELIMITERS:
         return val
     else:
@@ -145,12 +139,9 @@ def read_tail(src):
         if src.current() is None:
             raise SyntaxError('unexpected end of file')
         elif src.current() == ')':
-            # BEGIN PROBLEM 1
             remove_it = src.remove_front()
             return nil
-            # END PROBLEM 1
         elif src.current() == '.':
-            # BEGIN PROBLEM 2
             remove_dott = src.remove_front()
             read_item_after_dot = scheme_read(src)
             read_rest = read_tail(src)
@@ -158,13 +149,10 @@ def read_tail(src):
                 return read_item_after_dot
             else:
                 raise SyntaxError('Only one item has to be after dott')
-            # END PROBLEM 2
         else:
-            # BEGIN PROBLEM 1
             read_expression = scheme_read(src)
             read_rest = read_tail(src)
             return Pair(read_expression, read_rest)
-            # END PROBLEM 1
     except EOFError:
         raise SyntaxError('unexpected end of file')
 
